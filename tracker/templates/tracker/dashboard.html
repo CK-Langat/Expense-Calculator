@@ -153,8 +153,8 @@
     updateCategories();
 
     // Plotly Charts
-    const cashFlowJSON = {{ cash_flow_json|default: "{}" | safe }};
-    const expensePieJSON = {{ expense_pie_json|default: "{}" | safe }};
+    const cashFlowJSON = {{ cash_flow_json|safe }};
+    const expensePieJSON = {{ expense_pie_json|safe }};
 
     if (Object.keys(cashFlowJSON).length !== 0) {
         Plotly.newPlot('cashFlowChart', cashFlowJSON.data, cashFlowJSON.layout);

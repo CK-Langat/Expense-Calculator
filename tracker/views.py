@@ -4,6 +4,8 @@ from .utils import calculate_net_from_gross
 import pandas as pd
 import plotly.express as px
 from django.db.models import Sum
+import json
+from plotly.utils import PlotlyJSONEncoder
 
 def dashboard(request):
     if request.method == 'POST':
@@ -46,8 +48,6 @@ def dashboard(request):
             cash_flow = df.groupby(['month', 'type'])['amount'].sum().reset_index()
             fig1 = px.bar(cash_flow, x='month', y='amount', color='type', barmode='group', 
                           title='Monthly Cash Flow', color_discrete_map={'Income': '#00CC96', 'Expense': '#EF553B'})
-            import json
-            from plotly.utils import PlotlyJSONEncoder
             
             # Expenses Pie Chart
             expenses_df = df[df['type'] == 'Expense']
@@ -59,11 +59,11 @@ def dashboard(request):
                    'expense_pie_json': json.dumps(fig2, cls=PlotlyJSONEncoder)
                 }
             else:
-                 context_charts = {'cash_flow_json': json.dumps(fig1, cls=PlotlyJSONEncoder), 'expense_pie_json': None}
+                 context_charts = {'cash_flow_json': json.dumps(fig1, cls=PlotlyJSONEncoder), 'expense_pie_json': "{}"}
         else:
-            context_charts = {}
+            context_charts = {'cash_flow_json': "{}", 'expense_pie_json': "{}"}
     else:
-        context_charts = {}
+        context_charts = {'cash_flow_json': "{}", 'expense_pie_json': "{}"}
 
     context = {
         'transactions': transactions,
