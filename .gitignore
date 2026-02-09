@@ -29,3 +29,9 @@ venv.bak/
 # Project specific
 tunnel.log
 cloudflared-linux-amd64
+
+# Operating System
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
